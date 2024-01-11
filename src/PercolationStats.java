@@ -7,6 +7,9 @@ public class PercolationStats {
 
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials) {
+        if (n <= 0 || trials <= 0) {
+            throw new IllegalArgumentException();
+        }
         this.trials = trials;
         this.results = new double[trials];
         for (int i = 0; i < trials; i++) {
@@ -34,12 +37,12 @@ public class PercolationStats {
 
     // low endpoint of 95% confidence interval
     public double confidenceLo() {
-        return this.mean() - this.stddev() / Math.sqrt(this.trials);
+        return this.mean() - (1.96 * this.stddev()) / Math.sqrt(this.trials);
     }
 
     // high endpoint of 95% confidence interval
     public double confidenceHi() {
-        return this.mean() + this.stddev() / Math.sqrt(this.trials);
+        return this.mean() + (1.96 * this.stddev()) / Math.sqrt(this.trials);
     }
 
     // test client (see below)
